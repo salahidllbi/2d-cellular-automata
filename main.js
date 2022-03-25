@@ -22,10 +22,10 @@ var dataset = [
 function createTable() {
     let table = '';
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < dataset.length; i++) {
         let cells = '';
 
-        for (let j = 0; j < 10; j++) {
+        for (let j = 0; j < dataset[i].length; j++) {
             cells += createTableData(i, j);
         }
 
