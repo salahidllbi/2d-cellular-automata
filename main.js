@@ -48,18 +48,6 @@ function createTableRow(cells) {
 }
 
 /*
- * Trigger cycle 
- */
-
-function generate() {
-    document.getElementById('tb').innerHTML = createTable(dataset);
-
-    generation++;
-
-    lastGeneration = dataset;
-}
-
-/*
  * Generational logic
  */
 
@@ -119,19 +107,31 @@ function getStatus(y, x) {
     return 'empty';
 }
 
+/*
+ * Trigger generational cycle 
+ */
+
 function nextGeneration() {
     let newGeneration = [];
 
-    for (let y = 0; y < lastGeneration.length; y++) {
-        newGeneration[y] = [];
-
-        for (let x = 0; x < lastGeneration[y].length; x++) {
-            newGeneration[y][x] = (getStatus(y, x) == 'aged') ? lastGeneration[y][x] + 1 : 0;
-        }
+    if (generation == 0) {
+        newGeneration = dataset;
+        lastGeneration = dataset;
     }
 
-    lastGeneration = newGeneration;
+    if (generation > 0) {
+        for (let y = 0; y < lastGeneration.length; y++) {
+            newGeneration[y] = [];
+    
+            for (let x = 0; x < lastGeneration[y].length; x++) {
+                newGeneration[y][x] = (getStatus(y, x) == 'aged') ? lastGeneration[y][x] + 1 : 0;
+            }
+        }
+
+        lastGeneration = newGeneration;
+    }
 
     document.getElementById('tb').innerHTML = createTable(newGeneration);
+
     generation++;
 }
