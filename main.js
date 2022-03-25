@@ -26,11 +26,11 @@ var lastGeneration = [];
 function createTable(generation) {
     let table = '';
 
-    for (let i = 0; i < generation.length; i++) {
+    for (let y = 0; y < generation.length; y++) {
         let cells = '';
 
-        for (let j = 0; j < generation[i].length; j++) {
-            cells += createTableData(i, j, generation);
+        for (let x = 0; x < generation[y].length; x++) {
+            cells += createTableData(y, x, generation);
         }
 
         table += createTableRow(cells);
@@ -63,48 +63,48 @@ function generate() {
  * Generational logic
  */
 
-function getNeighbors(i, j) {
+function getNeighbors(y, x) {
     let neighbors = [];
 
-    if (j - 1 >= 0 && lastGeneration[i][j - 1] != 0) {
-        neighbors.push(lastGeneration[i][j - 1]);
+    if (x - 1 >= 0 && lastGeneration[y][x - 1] != 0) {
+        neighbors.push(lastGeneration[y][x - 1]);
     }
 
-    if (j - 1 >= 0 && i - 1 >= 0 && lastGeneration[i - 1][j - 1] != 0) {
-        neighbors.push(lastGeneration[i - 1][j - 1]);
+    if (x - 1 >= 0 && y - 1 >= 0 && lastGeneration[y - 1][x - 1] != 0) {
+        neighbors.push(lastGeneration[y - 1][x - 1]);
     }
 
-    if (i - 1 >= 0 && lastGeneration[i - 1][j] != 0) {
-        neighbors.push(lastGeneration[i - 1][j]);
+    if (y - 1 >= 0 && lastGeneration[y - 1][x] != 0) {
+        neighbors.push(lastGeneration[y - 1][x]);
     }
 
-    if (i - 1 >= 0 && j + 1 <= (lastGeneration[i - 1].length - 1) && lastGeneration[i - 1][j + 1] != 0) {
-        neighbors.push(lastGeneration[i - 1][j + 1]);
+    if (y - 1 >= 0 && x + 1 <= (lastGeneration[y - 1].length - 1) && lastGeneration[y - 1][x + 1] != 0) {
+        neighbors.push(lastGeneration[y - 1][x + 1]);
     }
 
-    if (j + 1 <= (lastGeneration[i].length - 1) && lastGeneration[i][j + 1] != 0) {
-        neighbors.push(lastGeneration[i][j + 1]);
+    if (x + 1 <= (lastGeneration[y].length - 1) && lastGeneration[y][x + 1] != 0) {
+        neighbors.push(lastGeneration[y][x + 1]);
     }
 
-    if (i + 1 <= (lastGeneration.length - 1) && j + 1 <= (lastGeneration[i + 1].length - 1) && lastGeneration[i + 1][j + 1] != 0) {
-        neighbors.push(lastGeneration[i + 1][j + 1]);
+    if (y + 1 <= (lastGeneration.length - 1) && x + 1 <= (lastGeneration[y + 1].length - 1) && lastGeneration[y + 1][x + 1] != 0) {
+        neighbors.push(lastGeneration[y + 1][x + 1]);
     }
 
-    if (i + 1 <= (lastGeneration.length - 1) && lastGeneration[i + 1][j] != 0) {
-        neighbors.push(lastGeneration[i + 1][j]);
+    if (y + 1 <= (lastGeneration.length - 1) && lastGeneration[y + 1][x] != 0) {
+        neighbors.push(lastGeneration[y + 1][x]);
     }
 
-    if (i + 1 <= (lastGeneration.length - 1) && j - 1 >= 0 && lastGeneration[i + 1][j - 1] != 0) {
-        neighbors.push(lastGeneration[i + 1][j - 1]);
+    if (y + 1 <= (lastGeneration.length - 1) && x - 1 >= 0 && lastGeneration[y + 1][x - 1] != 0) {
+        neighbors.push(lastGeneration[y + 1][x - 1]);
     }
 
     return neighbors;
 }
 
-function getStatus(i, j) {
-    let cell = lastGeneration[i][j];
+function getStatus(y, x) {
+    let cell = lastGeneration[y][x];
 
-    let neighbors = getNeighbors(i, j);
+    let neighbors = getNeighbors(y, x);
 
     let adults = 0;
 
@@ -122,11 +122,11 @@ function getStatus(i, j) {
 function nextGeneration() {
     let newGeneration = [];
 
-    for (let i = 0; i < lastGeneration.length; i++) {
-        newGeneration[i] = [];
+    for (let y = 0; y < lastGeneration.length; y++) {
+        newGeneration[y] = [];
 
-        for (let j = 0; j < lastGeneration[i].length; j++) {
-            newGeneration[i][j] = (getStatus(i, j) == 'aged') ? lastGeneration[i][j] + 1 : 0;
+        for (let x = 0; x < lastGeneration[y].length; x++) {
+            newGeneration[y][x] = (getStatus(y, x) == 'aged') ? lastGeneration[y][x] + 1 : 0;
         }
     }
 
