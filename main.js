@@ -23,24 +23,34 @@ var lastGeneration = [];
  * Build table
  */
 
-function createTable(generation) {
-    let table = '';
+function createTable(generationData) {
+    let tableData = '';
+    
+    tableData += setGenerationHeader(generationData);
 
-    for (let y = 0; y < generation.length; y++) {
+    for (let y = 0; y < generationData.length; y++) {
         let cells = '';
 
-        for (let x = 0; x < generation[y].length; x++) {
-            cells += createTableData(y, x, generation);
+        for (let x = 0; x < generationData[y].length; x++) {
+            cells += createTableData(y, x, generationData);
         }
 
-        table += createTableRow(cells);
+        tableData += createTableRow(cells);
     }
 
-    return table;
+    return tableData;
 }
 
-function createTableData(y, x, generation) {
-    return '<td>' + generation[y][x] + '</td>';
+function setGenerationHeader(generationData) {
+    let header = '<th colspan="' + generationData[0].length + '">';
+
+    header += 'Generation: ' + (generation + 1);
+
+    return header + '</th>';
+}
+
+function createTableData(y, x, generationData) {
+    return '<td>' + generationData[y][x] + '</td>';
 }
 
 function createTableRow(cells) {
